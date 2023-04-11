@@ -1,0 +1,73 @@
+
+import random
+
+#start of game
+def game():
+    print("Welcome to the numbers guessing game!")
+    print(" ")
+    while True:
+        level = input("please select a difficulty: (easy, medium, hard): ").lower()
+        if level in["easy","medium","hard"]:
+            break
+        else:
+            print("invalid response!")
+    allowed_guesses = ""
+    #changes the difficulty of the game based on user input
+    if level == "easy":
+        guess_range = 50
+        allowed_guesses = 25
+    elif level == "medium":
+        guess_range = 100
+        allowed_guesses = 15
+    else:
+        guess_range = 150
+        allowed_guesses = 10
+    
+    answer = random.randint(1, guess_range)
+       
+    guess = ""
+
+    #gives a limited number of guesses
+    for i in range(allowed_guesses):
+        userInput = input("guess a number between 1 and " + str(guess_range) + ": ")
+        guess = int(userInput)
+        print(" ")
+        print(str(allowed_guesses - i) + " guesses left!")
+        
+        
+        #stops game if guessed correctly
+        if guess == answer:
+            print("You guessed correctly!")
+            reset = input("Would you like to play again? ").lower()
+            if reset == "yes":
+                game()
+            else:
+                exit()
+        #helpful hints  
+        if abs(guess - answer) <= 5:
+            print("ALMOST!!!!!")
+        elif abs(guess - answer) <= 10:
+            print("You're within 10 digits!!!!")
+        elif abs(guess - answer) <= 20:
+            print("You're within 20 digits!!!")
+        elif abs(guess - answer) <= 30:
+            print("You're within 30 digits!!")
+        else:
+            print("Not even close!")
+        #stops game if max num of guesses used
+        if (i == allowed_guesses - 1):
+            print("You've run out of guesses, sorry. You lose!")
+            reset = input("Would you like to play again? ").lower()
+            if reset == "yes":
+                game()
+            else:
+                exit()
+        #stops game if guess is higher than guess_range        
+        if (guess > guess_range):
+            print("that number is outside of the guess range! start over!")
+            print(" ")
+            print(" ")
+            game()
+            
+        
+game()      
